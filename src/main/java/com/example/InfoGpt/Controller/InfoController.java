@@ -1,9 +1,11 @@
 package com.example.InfoGpt.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.example.InfoGpt.Entity.Question;
 import com.example.InfoGpt.Enums.InfoGptType;
 import com.example.InfoGpt.Enums.Type;
@@ -14,11 +16,8 @@ import com.example.InfoGpt.constants.InfoGptConstants;
 @RestController
 public class InfoController {
 
-	private final InfoGPTFactory infoGPTFactory;
-
-	public InfoController(InfoGPTFactory infoGPTFactory) {
-		this.infoGPTFactory = infoGPTFactory;
-	}
+	@Autowired
+	private InfoGPTFactory infoGPTFactory;
 
 	@GetMapping("/getinfo")
 	public ResponseEntity<?> fetchInformation(@RequestBody Question question) {

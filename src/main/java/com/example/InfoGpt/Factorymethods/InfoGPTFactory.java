@@ -10,11 +10,11 @@ import com.example.InfoGpt.Service.InfoGpt;
 @Component
 public class InfoGPTFactory {
 
-	private static FacultyService facultyService;
+	private FacultyService facultyService;
 
 	@Autowired
 	public InfoGPTFactory(FacultyService facultyService) {
-		InfoGPTFactory.facultyService = facultyService;
+		this.facultyService = facultyService;
 	}
 
 	public InfoGpt getInfoGptFactoryobject(InfoGptType type) {
