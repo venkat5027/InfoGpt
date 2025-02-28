@@ -6,5 +6,5 @@ import com.example.InfoGpt.Enums.Type;
 
 public interface InfoGpt {
 
-    public ResponseEntity<?> getDetails(String name, Type type);
+	public ResponseEntity<?> getDetails(String name, Type type);
 }

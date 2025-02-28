@@ -4,15 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.example.InfoGpt.Entity.Faculty;
 import com.example.InfoGpt.Enums.Type;
 import com.example.InfoGpt.Repositories.FacultyRepository;
 
+@Service
 public class FacultyService implements InfoGpt {
 
 	@Autowired
-	FacultyRepository facultyRepository;
+	private FacultyRepository facultyRepository;
 
 	@Override
 	public ResponseEntity<?> getDetails(String name, Type type) {
