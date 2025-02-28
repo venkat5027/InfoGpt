@@ -33,8 +33,8 @@ public class InfoController {
 								+ InfoGptConstants.FACULTY_OF_ORGANIZATION.length() + 1);
 				type = Type.ORGNAME;
 			} else if (question.getQuestion().contains(InfoGptConstants.FACULTY_BY_NAME)) {
-				name = question.getQuestion().substring(question.getQuestion().indexOf(InfoGptConstants.FACULTY)
-						+ InfoGptConstants.FACULTY.length() + 1);
+				name = question.getQuestion().substring(question.getQuestion().indexOf(InfoGptConstants.FACULTY_BY_NAME)
+						+ InfoGptConstants.FACULTY_BY_NAME.length() + 1);
 				type = Type.NAME;
 			}
 		}
