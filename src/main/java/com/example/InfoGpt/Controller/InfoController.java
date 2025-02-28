@@ -25,7 +25,7 @@ public class InfoController {
 		InfoGpt infoGpt = null;
 		String name = "";
 		Type type = Type.ALL;
-		if (question.getQuestion().contains(InfoGptType.FACULTY.toString())) {
+		if (question.getQuestion().contains(InfoGptConstants.FACULTY)) {
 			infoGpt = infoGPTFactory.getInfoGptFactoryobject(InfoGptType.FACULTY);
 			if (question.getQuestion().contains(InfoGptConstants.FACULTY_OF_ORGANIZATION)) {
 				name = question.getQuestion()
