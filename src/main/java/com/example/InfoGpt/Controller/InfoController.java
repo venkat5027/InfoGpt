@@ -15,23 +15,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class InfoController {
-    @GetMapping("/getinfo")
-    public ResponseEntity<?> fetchInformation(@RequestBody Question question) {
-        ResponseEntity<?> result = null;
-        InfoGpt infoGpt;
-        if(question.getQuestion().contains("faculty")) {
-            infoGpt = InfoGPTFactory.getInfoGptFactoryobject(InfoGptType.FACULTY);
-            if(question.getQuestion().contains(InfoGptConstants.FACULTY_OF_ORGANIZATION)) {
-                String name = question.getQuestion().substring(question.getQuestion().indexOf(InfoGptConstants.FACULTY_OF_ORGANIZATION) + InfoGptConstants.FACULTY_OF_ORGANIZATION.length() + question.getQuestion().length());
-                System.out.println(name);
-            }
-            else if(question.getQuestion().contains("faculty details of")) {
-                String name = question.getQuestion().substring(question.getQuestion().indexOf(InfoGptConstants.FACULTY) + InfoGptConstants.FACULTY.length()+ question.getQuestion().length());
-                System.out.println(name);
-            }
-            System.out.println("noting");
-            result = infoGpt.getDetails("", Type.ALL);
-        }
-        return result;
-    }
+	
+	@GetMapping("/getinfo")
+	public ResponseEntity<?> fetchInformation(@RequestBody Question question) {
+		ResponseEntity<?> result = null;
+		InfoGpt infoGpt;
+		if (question.getQuestion().contains("faculty")) {
+			infoGpt = InfoGPTFactory.getInfoGptFactoryobject(InfoGptType.FACULTY);
+			if (question.getQuestion().contains(InfoGptConstants.FACULTY_OF_ORGANIZATION)) {
+				String name = question.getQuestion()
+						.substring(question.getQuestion().indexOf(InfoGptConstants.FACULTY_OF_ORGANIZATION)
+								+ InfoGptConstants.FACULTY_OF_ORGANIZATION.length() + 1);
+				System.out.println(name);
+			} else if (question.getQuestion().contains(InfoGptConstants.FACULTY)) {
+				String name = question.getQuestion().substring(question.getQuestion().indexOf(InfoGptConstants.FACULTY)
+						+ InfoGptConstants.FACULTY.length() + 1);
+				System.out.println(name);
+			}
+			System.out.println("noting");
+			result = infoGpt.getDetails("", Type.ALL);
+		}
+		return result;
+	}
 }
