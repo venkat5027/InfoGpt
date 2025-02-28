@@ -1,8 +1,8 @@
 package com.example.InfoGpt.Service;
 
-import com.example.InfoGpt.Enums.OrgType;
-import com.example.InfoGpt.Enums.Type;
 import org.springframework.http.ResponseEntity;
+
+import com.example.InfoGpt.Enums.Type;
 
 public interface InfoGpt {
 
