@@ -13,5 +13,7 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
 
 	public Optional<Faculty> findByName(String name);
 
-	public List<Faculty> findByOrganization(String name);
+	public List<Faculty> findByOrganization(String orgName);
+	
+	List<Faculty> findByProgrammingLanguage(String programmingLanguage);
 }

@@ -1,4 +1,4 @@
 package com.example.InfoGpt.Enums;
 
-public enum OrgType {
+public enum OrganizationQueryType {
 }

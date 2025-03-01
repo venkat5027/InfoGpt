@@ -9,39 +9,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.InfoGpt.Entity.Faculty;
+import com.example.InfoGpt.Entity.HR;
 import com.example.InfoGpt.Enums.FacultyAndHrQueryType;
-import com.example.InfoGpt.Repositories.FacultyRepository;
+import com.example.InfoGpt.Repositories.HrRespository;
 
 @Service
-public class FacultyService implements InfoGpt {
+public class HrService implements InfoGpt {
 
 	@Autowired
-	private FacultyRepository facultyRepository;
+	private HrRespository hrRepository;
 
 	@Override
 	public ResponseEntity<?> getDetails(String name, FacultyAndHrQueryType type) {
 		switch (type) {
 		case NAME:
-			Optional<Faculty> faculty = facultyRepository.findByName(name);
+			Optional<HR> faculty = hrRepository.findByName(name);
 			if (faculty.isEmpty())
 				return ResponseEntity.status(HttpStatus.NOT_FOUND)
-						.body(Map.of("response", "The data is not found for the requested faculty name " + name));
+						.body(Map.of("response", "The data is not found for the requested hr name " + name));
 			return ResponseEntity.ok(faculty);
-		case KEYWORD:
-			List<Faculty> keywordFaculties = facultyRepository.findByProgrammingLanguage(name);
-			if (keywordFaculties.isEmpty())
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-						Map.of("response", "The data of faculty is not found with the requested keyword " + name));
-			return ResponseEntity.ok(keywordFaculties);
 		case ORGNAME:
-			List<Faculty> orgFaculties = facultyRepository.findByOrganization(name);
+			List<HR> orgFaculties = hrRepository.findByOrganization(name);
 			if (orgFaculties.isEmpty())
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("response",
-						"The data is not found for the requested faculties belongs to organization " + name));
+						"The data is not found for the requested hr belongs to organization " + name));
 			return ResponseEntity.ok(orgFaculties);
 		case ALL:
-			List<Faculty> allFaculties = facultyRepository.findAll();
+			List<HR> allFaculties = hrRepository.findAll();
 			if (allFaculties.isEmpty())
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("response", "The data is not found"));
 			return ResponseEntity.ok(allFaculties);
@@ -49,4 +43,5 @@ public class FacultyService implements InfoGpt {
 			return ResponseEntity.ok("No Data Found relaed to the given query");
 		}
 	}
+
 }
