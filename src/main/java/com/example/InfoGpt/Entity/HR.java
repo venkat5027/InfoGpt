@@ -63,8 +63,8 @@ public class HR {
 	}
 
 	public String getOrganizationName() {
-        return organization != null ? organization.getName() : null;
-    }
+		return organization != null ? organization.getName() : null;
+	}
 
 	public void setOrganization(Organization organization) {
 		this.organization = organization;

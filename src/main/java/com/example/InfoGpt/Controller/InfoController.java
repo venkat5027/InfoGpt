@@ -27,7 +27,30 @@ public class InfoController {
 		String name = "";
 		FacultyAndHrQueryType type = FacultyAndHrQueryType.ALL;
 		OrganizationQueryType orgType = OrganizationQueryType.YEAR_OF_EST;
-		if (question.getQuestion().contains(InfoGptConstants.FACULTY)) {
+		if (question.getQuestion().contains(InfoGptConstants.ORGANIZATION)) {
+			infoGpt = infoGPTFactory.getInfoGptFactoryobject(InfoGptType.ORGANIZATION);
+			if (question.getQuestion().contains(InfoGptConstants.ORG_ESTABLISHMENT)) {
+				name = question.getQuestion()
+						.substring(question.getQuestion().indexOf(InfoGptConstants.ORG_ESTABLISHMENT)
+								+ InfoGptConstants.ORG_ESTABLISHMENT.length() + 1);
+				orgType = OrganizationQueryType.YEAR_OF_EST;
+			} else if (question.getQuestion().contains(InfoGptConstants.STUDENTS_PLACED_BY_ORG)) {
+				name = question.getQuestion()
+						.substring(question.getQuestion().indexOf(InfoGptConstants.STUDENTS_PLACED_BY_ORG)
+								+ InfoGptConstants.STUDENTS_PLACED_BY_ORG.length() + 1);
+				orgType = OrganizationQueryType.STUDENTS_COUNT;
+			} else if (question.getQuestion().contains(InfoGptConstants.TOTAL_NOOF_FACULTIES_IN_ORG)) {
+				name = question.getQuestion()
+						.substring(question.getQuestion().indexOf(InfoGptConstants.TOTAL_NOOF_FACULTIES_IN_ORG)
+								+ InfoGptConstants.TOTAL_NOOF_FACULTIES_IN_ORG.length() + 1);
+				orgType = OrganizationQueryType.FACULTY_COUNT;
+			} else if (question.getQuestion().contains(InfoGptConstants.TOTAL_NOOF_HRS_IN_ORG)) {
+				name = question.getQuestion()
+						.substring(question.getQuestion().indexOf(InfoGptConstants.TOTAL_NOOF_HRS_IN_ORG)
+								+ InfoGptConstants.TOTAL_NOOF_HRS_IN_ORG.length() + 1);
+				orgType = OrganizationQueryType.HR_COUNT;
+			}
+		} else if (question.getQuestion().contains(InfoGptConstants.FACULTY)) {
 			infoGpt = infoGPTFactory.getInfoGptFactoryobject(InfoGptType.FACULTY);
 			if (question.getQuestion().contains(InfoGptConstants.FACULTY_OF_ORGANIZATION)) {
 				name = question.getQuestion()
