@@ -13,4 +13,6 @@ public class InfoGptConstants {
 	public static final String HR = "hr";
 	public static final String HR_OF_ORGANIZATION = "hr details of organization";
 	public static final String HR_BY_NAME = "hr details of";
+	
+	public static final String ORGANIZATION = "organization";
 }

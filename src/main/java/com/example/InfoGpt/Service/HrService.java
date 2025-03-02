@@ -10,8 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.InfoGpt.Entity.HR;
+import com.example.InfoGpt.Entity.Organization;
 import com.example.InfoGpt.Enums.FacultyAndHrQueryType;
+import com.example.InfoGpt.Enums.OrganizationQueryType;
 import com.example.InfoGpt.Repositories.HrRespository;
+import com.example.InfoGpt.Repositories.OrganizationRepository;
 
 @Service
 public class HrService implements InfoGpt {
@@ -19,8 +22,11 @@ public class HrService implements InfoGpt {
 	@Autowired
 	private HrRespository hrRepository;
 
+	@Autowired
+	private OrganizationRepository organizationRepository;
+
 	@Override
-	public ResponseEntity<?> getDetails(String name, FacultyAndHrQueryType type) {
+	public ResponseEntity<?> getDetails(String name, FacultyAndHrQueryType type, OrganizationQueryType orgType) {
 		switch (type) {
 		case NAME:
 			Optional<HR> faculty = hrRepository.findByName(name);
@@ -29,7 +35,11 @@ public class HrService implements InfoGpt {
 						.body(Map.of("response", "The data is not found for the requested hr name " + name));
 			return ResponseEntity.ok(faculty);
 		case ORGNAME:
-			List<HR> orgFaculties = hrRepository.findByOrganization(name);
+			Optional<Organization> org = organizationRepository.findByName(name);
+			if (org.isEmpty())
+				return ResponseEntity.status(HttpStatus.NOT_FOUND)
+						.body(Map.of("response", "Mentioned Organization " + name + " is not found"));
+			List<HR> orgFaculties = hrRepository.findByOrganization(org.get());
 			if (orgFaculties.isEmpty())
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("response",
 						"The data is not found for the requested hr belongs to organization " + name));

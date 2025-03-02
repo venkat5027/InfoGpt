@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.InfoGpt.Entity.Question;
-import com.example.InfoGpt.Enums.InfoGptType;
 import com.example.InfoGpt.Enums.FacultyAndHrQueryType;
+import com.example.InfoGpt.Enums.InfoGptType;
+import com.example.InfoGpt.Enums.OrganizationQueryType;
 import com.example.InfoGpt.Factorymethods.InfoGPTFactory;
 import com.example.InfoGpt.Service.InfoGpt;
 import com.example.InfoGpt.Service.InfoGptNullObject;
@@ -25,6 +26,7 @@ public class InfoController {
 		InfoGpt infoGpt = new InfoGptNullObject();
 		String name = "";
 		FacultyAndHrQueryType type = FacultyAndHrQueryType.ALL;
+		OrganizationQueryType orgType = OrganizationQueryType.YEAR_OF_EST;
 		if (question.getQuestion().contains(InfoGptConstants.FACULTY)) {
 			infoGpt = infoGPTFactory.getInfoGptFactoryobject(InfoGptType.FACULTY);
 			if (question.getQuestion().contains(InfoGptConstants.FACULTY_OF_ORGANIZATION)) {
@@ -55,7 +57,7 @@ public class InfoController {
 				type = FacultyAndHrQueryType.NAME;
 			}
 		}
-		return infoGpt.getDetails(name, type);
+		return infoGpt.getDetails(name, type, orgType);
 	}
 
 	private String getKeyword(String question) {

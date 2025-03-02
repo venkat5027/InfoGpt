@@ -7,6 +7,8 @@ import com.example.InfoGpt.Enums.InfoGptType;
 import com.example.InfoGpt.Service.FacultyService;
 import com.example.InfoGpt.Service.HrService;
 import com.example.InfoGpt.Service.InfoGpt;
+import com.example.InfoGpt.Service.InfoGptNullObject;
+import com.example.InfoGpt.Service.OrganizationService;
 
 @Component
 public class InfoGPTFactory {
@@ -15,10 +17,13 @@ public class InfoGPTFactory {
 
 	private HrService hrService;
 
+	private OrganizationService organizationService;
+
 	@Autowired
-	public InfoGPTFactory(FacultyService facultyService, HrService hrService) {
+	public InfoGPTFactory(FacultyService facultyService, HrService hrService, OrganizationService organizationService) {
 		this.facultyService = facultyService;
 		this.hrService = hrService;
+		this.organizationService = organizationService;
 	}
 
 	public InfoGpt getInfoGptFactoryobject(InfoGptType type) {
@@ -27,8 +32,10 @@ public class InfoGPTFactory {
 			return facultyService;
 		case HR:
 			return hrService;
+		case ORGANIZATION:
+			return organizationService;
 		default:
-			return null;
+			return new InfoGptNullObject();
 		}
 	}
 }

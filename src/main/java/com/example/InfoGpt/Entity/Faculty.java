@@ -1,23 +1,26 @@
 package com.example.InfoGpt.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-@Table(name = "Faculty")
 public class Faculty {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
 	private int age;
 	private boolean gender;
 	private float experience;
 	private String programmingLanguage;
-	private String organization;
+	@ManyToOne
+	@JsonIgnoreProperties("faculty")
+	private Organization organization;
 
 	public long getId() {
 		return id;
@@ -67,11 +70,11 @@ public class Faculty {
 		this.programmingLanguage = programmingLanguage;
 	}
 
-	public String getOrganization() {
-		return organization;
+	public String getOrganizationName() {
+		return organization != null ? organization.getName() : null;
 	}
 
-	public void setOrganization(String organization) {
+	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
 
