@@ -4,4 +4,5 @@ public enum Type {
     NAME,
     ORGNAME,
     ALL,
+    KEYWORD,
 }

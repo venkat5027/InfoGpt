@@ -24,13 +24,13 @@ public class HrService implements InfoGpt{
                 Optional<HR> Hr = hrRepository.findByName(name);
                 if (Hr.isEmpty())
                     return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                            .body(Map.of("response", "The data is not found for the requested faculty name " + name));
+                            .body(Map.of("response", "The data is not found for the requested Hr name " + name));
                 return ResponseEntity.ok(Hr);
             case ORGNAME:
                 List<HR> orgHr = hrRepository.findByOrganization(name);
                 if (orgHr.isEmpty())
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("response",
-                            "The data is not found for the requested faculties belongs to organization " + name));
+                            "The data is not found for the requested Hr belongs to organization " + name));
                 return ResponseEntity.ok(orgHr);
             case ALL:
                 List<HR> allHr = hrRepository.findAll();
@@ -39,7 +39,7 @@ public class HrService implements InfoGpt{
                             "The data is not found"));
                 return ResponseEntity.ok(allHr);
             default:
-                return ResponseEntity.ok("No Data Found relaed to the given query");
+                return ResponseEntity.ok("No Data Found related to the given query");
         }
     }
 }

@@ -40,6 +40,14 @@ public class FacultyService implements InfoGpt {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("response",
 						"The data is not found"));
 			return ResponseEntity.ok(allFaculties);
+			case KEYWORD:
+				List<Faculty> keyWords = facultyRepository.findByprogrammingLanguage(name);
+				if (keyWords.isEmpty())
+					return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("response",
+							"The data is not found for the requested faculties belongs to organization " + name));
+				return ResponseEntity.ok(keyWords);
+
+
 		default:
 			return ResponseEntity.ok("No Data Found relaed to the given query");
 		}
