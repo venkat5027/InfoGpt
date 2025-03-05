@@ -18,7 +18,7 @@ import com.example.InfoGpt.Repositories.FacultyRepository;
 import com.example.InfoGpt.Repositories.OrganizationRepository;
 
 @Service
-public class FacultyService implements InfoGpt {
+public class FacultyServiceImpl implements InfoGpt {
 
 	@Autowired
 	private FacultyRepository facultyRepository;

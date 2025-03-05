@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import com.example.InfoGpt.Enums.FacultyAndHrQueryType;
 import com.example.InfoGpt.Enums.OrganizationQueryType;
 
-public class InfoGptNullObject implements InfoGpt {
+public class InfoGptNullObjectImpl implements InfoGpt {
 
 	@Override
 	public ResponseEntity<?> getDetails(String name, FacultyAndHrQueryType type, OrganizationQueryType orgType) {

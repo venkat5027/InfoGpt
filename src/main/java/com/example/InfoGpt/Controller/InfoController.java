@@ -12,7 +12,7 @@ import com.example.InfoGpt.Enums.InfoGptType;
 import com.example.InfoGpt.Enums.OrganizationQueryType;
 import com.example.InfoGpt.Factorymethods.InfoGPTFactory;
 import com.example.InfoGpt.Service.InfoGpt;
-import com.example.InfoGpt.Service.InfoGptNullObject;
+import com.example.InfoGpt.Service.InfoGptNullObjectImpl;
 import com.example.InfoGpt.constants.InfoGptConstants;
 
 @RestController
@@ -23,7 +23,7 @@ public class InfoController {
 
 	@GetMapping("/getinfo")
 	public ResponseEntity<?> fetchInformation(@RequestBody Question question) {
-		InfoGpt infoGpt = new InfoGptNullObject();
+		InfoGpt infoGpt = new InfoGptNullObjectImpl();
 		String name = "";
 		FacultyAndHrQueryType type = FacultyAndHrQueryType.ALL;
 		OrganizationQueryType orgType = OrganizationQueryType.YEAR_OF_EST;
