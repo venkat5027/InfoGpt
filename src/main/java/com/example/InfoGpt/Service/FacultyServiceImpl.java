@@ -36,15 +36,12 @@ public class FacultyServiceImpl implements InfoGpt {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND)
 						.body(Map.of("response", "The data is not found for the requested faculty name " + name));
 			responseStr = new StringBuffer();
-			responseStr.append("The requested details of " + name + ": ");
+			responseStr.append("The requested details of ").append(name).append(": ");
 			if (faculty.get().getGender().toUpperCase().equals(Gender.MALE.name()))
 				responseStr.append("He is ");
 			else
 				responseStr.append("she is ");
-			responseStr.append(faculty.get().getAge())
-					.append(" years old and has " + faculty.get().getExperience() + "+ years of experience in "
-							+ faculty.get().getProgrammingLanguage() + " technology at "
-							+ faculty.get().getOrganizationName());
+			responseStr.append(faculty.get().getAge()).append(" years old and has ").append(faculty.get().getExperience()).append("+ years of experience in ").append(faculty.get().getProgrammingLanguage()).append(" technology at ").append(faculty.get().getOrganizationName());
 			return ResponseEntity.ok(Map.of("response", responseStr));
 		case KEYWORD:
 			List<Faculty> keywordFaculties = facultyRepository.findByProgrammingLanguage(name);
@@ -53,16 +50,12 @@ public class FacultyServiceImpl implements InfoGpt {
 						Map.of("response", "The data of faculty is not found with the requested keyword " + name));
 			if (keywordFaculties.size() == 1) {
 				responseStr = new StringBuffer();
-				responseStr.append("The requested details of the faculty teaching " + name + " technology: Name is "
-						+ keywordFaculties.get(0).getName());
-				if (keywordFaculties.get(0).getGender().toUpperCase().equals(Gender.MALE.name()))
+				responseStr.append("The requested details of the faculty teaching ").append(name).append(" technology: Name is ").append(keywordFaculties.getFirst().getName());
+				if (keywordFaculties.getFirst().getGender().toUpperCase().equals(Gender.MALE.name()))
 					responseStr.append(", He is ");
 				else
 					responseStr.append(", she is ");
-				responseStr.append(keywordFaculties.get(0).getAge())
-						.append(" years old and has " + keywordFaculties.get(0).getExperience()
-								+ "+ years of experience in " + keywordFaculties.get(0).getProgrammingLanguage()
-								+ " technology at " + keywordFaculties.get(0).getOrganizationName());
+				responseStr.append(keywordFaculties.getFirst().getAge()).append(" years old and has ").append(keywordFaculties.getFirst().getExperience()).append("+ years of experience in ").append(keywordFaculties.getFirst().getProgrammingLanguage()).append(" technology at ").append(keywordFaculties.getFirst().getOrganizationName());
 				return ResponseEntity.ok(Map.of("response", responseStr));
 			}
 			return ResponseEntity.ok(Map.of("response", keywordFaculties));
@@ -77,16 +70,12 @@ public class FacultyServiceImpl implements InfoGpt {
 						"The data is not found for the requested faculties belongs to organization " + name));
 			if (orgFaculties.size() == 1) {
 				responseStr = new StringBuffer();
-				responseStr.append("The requested details of the faculty working at " + name + ": Name is "
-						+ orgFaculties.get(0).getName());
-				if (orgFaculties.get(0).getGender().toUpperCase().equals(Gender.MALE.name()))
+				responseStr.append("The requested details of the faculty working at ").append(name).append(": Name is ").append(orgFaculties.getFirst().getName());
+				if (orgFaculties.getFirst().getGender().toUpperCase().equals(Gender.MALE.name()))
 					responseStr.append(", He is ");
 				else
 					responseStr.append(", she is ");
-				responseStr.append(orgFaculties.get(0).getAge())
-						.append(" years old and has " + orgFaculties.get(0).getExperience()
-								+ "+ years of experience in " + orgFaculties.get(0).getProgrammingLanguage()
-								+ " technology");
+				responseStr.append(orgFaculties.getFirst().getAge()).append(" years old and has ").append(orgFaculties.getFirst().getExperience()).append("+ years of experience in ").append(orgFaculties.getFirst().getProgrammingLanguage()).append(" technology");
 				return ResponseEntity.ok(Map.of("response", responseStr));
 			}
 			return ResponseEntity.ok(Map.of("response", orgFaculties));

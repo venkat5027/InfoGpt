@@ -36,32 +36,40 @@ public class HrServiceImpl implements InfoGpt {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND)
 						.body(Map.of("response", "The data is not found for the requested hr name " + name));
 			responseStr = new StringBuffer();
-			responseStr.append("The requested details of " + name + ": ");
+			responseStr.append("The requested details of ").append(name).append(": ");
 			if (hr.get().getGender().toUpperCase().equals(Gender.MALE.name()))
 				responseStr.append("He is ");
 			else
 				responseStr.append("she is ");
-			responseStr.append(hr.get().getAge())
-					.append(" years old and has " + hr.get().getExperience() + "+ years of experience at "
-							+ hr.get().getOrganizationName());
+			responseStr.append(hr.get().getAge()).append(" years old and has ").append(hr.get().getExperience()).append("+ years of experience at ").append(hr.get().getOrganizationName());
 			return ResponseEntity.ok(Map.of("response", responseStr));
 		case ORGNAME:
 			Optional<Organization> org = organizationRepository.findByName(name);
 			if (org.isEmpty())
 				return ResponseEntity.status(HttpStatus.NOT_FOUND)
 						.body(Map.of("response", "Mentioned Organization " + name + " is not found"));
-			List<HR> orgFaculties = hrRepository.findByOrganization(org.get());
-			if (orgFaculties.isEmpty())
+			List<HR> orgHrs = hrRepository.findByOrganization(org.get());
+			if (orgHrs.isEmpty())
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("response",
 						"The data is not found for the requested hr belongs to organization " + name));
-			return ResponseEntity.ok(orgFaculties);
+			if (orgHrs.size() == 1) {
+				responseStr = new StringBuffer();
+				responseStr.append("The requested details of the hr working at ").append(name).append(": Name is ").append(orgHrs.getFirst().getName());
+				if (orgHrs.getFirst().getGender().toUpperCase().equals(Gender.MALE.name()))
+					responseStr.append(", He is ");
+				else
+					responseStr.append(", she is ");
+				responseStr.append(orgHrs.getFirst().getAge()).append(" years old and has ").append(orgHrs.getFirst().getExperience()).append("+ years of experience at ").append(orgHrs.getFirst().getOrganizationName());
+				return ResponseEntity.ok(Map.of("response", responseStr));
+			}
+			return ResponseEntity.ok(Map.of("response", orgHrs));
 		case ALL:
 			List<HR> allFaculties = hrRepository.findAll();
 			if (allFaculties.isEmpty())
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("response", "The data is not found"));
 			return ResponseEntity.ok(allFaculties);
 		default:
-			return ResponseEntity.ok("No Data Found relaed to the given query");
+			return ResponseEntity.ok("No Data Found related to the given query");
 		}
 	}
 
