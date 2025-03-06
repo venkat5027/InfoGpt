@@ -15,7 +15,7 @@ import com.example.InfoGpt.Enums.OrganizationQueryType;
 import com.example.InfoGpt.Repositories.OrganizationRepository;
 
 @Service
-public class OrganizationService implements InfoGpt {
+public class OrganizationServiceImpl implements InfoGpt {
 
 	@Autowired
 	private OrganizationRepository organizationRepository;

@@ -16,7 +16,7 @@ public class HR {
 	private long id;
 	private String name;
 	private int age;
-	private boolean gender;
+	private String gender;
 	private float experience;
 	@ManyToOne
 	@JsonIgnoreProperties("hr")
@@ -46,11 +46,11 @@ public class HR {
 		this.age = age;
 	}
 
-	public boolean isGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(boolean gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

@@ -1,5 +1,6 @@
 package com.example.InfoGpt.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
@@ -13,10 +14,11 @@ public class Faculty {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private long id;
 	private String name;
 	private int age;
-	private boolean gender;
+	private String gender;
 	private float experience;
 	private String programmingLanguage;
 	@ManyToOne
@@ -47,11 +49,11 @@ public class Faculty {
 		this.age = age;
 	}
 
-	public boolean isGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(boolean gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

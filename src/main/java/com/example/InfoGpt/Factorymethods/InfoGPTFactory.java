@@ -4,23 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.InfoGpt.Enums.InfoGptType;
-import com.example.InfoGpt.Service.FacultyService;
-import com.example.InfoGpt.Service.HrService;
+import com.example.InfoGpt.Service.FacultyServiceImpl;
+import com.example.InfoGpt.Service.HrServiceImpl;
 import com.example.InfoGpt.Service.InfoGpt;
-import com.example.InfoGpt.Service.InfoGptNullObject;
-import com.example.InfoGpt.Service.OrganizationService;
+import com.example.InfoGpt.Service.InfoGptNullObjectImpl;
+import com.example.InfoGpt.Service.OrganizationServiceImpl;
 
 @Component
 public class InfoGPTFactory {
 
-	private FacultyService facultyService;
+	private FacultyServiceImpl facultyService;
 
-	private HrService hrService;
+	private HrServiceImpl hrService;
 
-	private OrganizationService organizationService;
+	private OrganizationServiceImpl organizationService;
 
 	@Autowired
-	public InfoGPTFactory(FacultyService facultyService, HrService hrService, OrganizationService organizationService) {
+	public InfoGPTFactory(FacultyServiceImpl facultyService, HrServiceImpl hrService, OrganizationServiceImpl organizationService) {
 		this.facultyService = facultyService;
 		this.hrService = hrService;
 		this.organizationService = organizationService;
@@ -35,7 +35,7 @@ public class InfoGPTFactory {
 		case ORGANIZATION:
 			return organizationService;
 		default:
-			return new InfoGptNullObject();
+			return new InfoGptNullObjectImpl();
 		}
 	}
 }
