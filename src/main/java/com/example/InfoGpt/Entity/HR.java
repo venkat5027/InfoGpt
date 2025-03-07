@@ -1,5 +1,6 @@
 package com.example.InfoGpt.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
@@ -13,6 +14,7 @@ public class HR {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private long id;
 	private String name;
 	private int age;

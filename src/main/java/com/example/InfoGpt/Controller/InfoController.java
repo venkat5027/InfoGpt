@@ -3,7 +3,7 @@ package com.example.InfoGpt.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.InfoGpt.Entity.Question;
@@ -16,10 +16,8 @@ public class InfoController {
 	private InfoGptService infoGptService;
 
 	@GetMapping("/getinfo")
-	public ResponseEntity<?> fetchInformation(@RequestBody Question question) {
-//	public ResponseEntity<?> fetchInformation(@RequestParam String qst) {
-//		Question question = new Question(qst);
-		return infoGptService.getInfo(question);
+	public ResponseEntity<?> fetchInformation(@RequestParam String qst) {
+		return infoGptService.getInfo(new Question(qst));
 	}
 
 }
