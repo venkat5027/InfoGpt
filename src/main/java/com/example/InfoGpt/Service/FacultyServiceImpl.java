@@ -1,10 +1,16 @@
 package com.example.InfoGpt.Service;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,6 +32,9 @@ public class FacultyServiceImpl implements InfoGpt {
 	@Autowired
 	private OrganizationRepository organizationRepository;
 
+	@Autowired
+	private FileStorageService fileStorageService;
+
 	@Override
 	public ResponseEntity<?> getDetails(String name, FacultyAndHrQueryType type, OrganizationQueryType orgType) {
 		StringBuffer responseStr;
@@ -41,8 +50,28 @@ public class FacultyServiceImpl implements InfoGpt {
 				responseStr.append("He is ");
 			else
 				responseStr.append("she is ");
-			responseStr.append(faculty.get().getAge()).append(" years old and has ").append(faculty.get().getExperience()).append("+ years of experience in ").append(faculty.get().getProgrammingLanguage()).append(" technology at ").append(faculty.get().getOrganizationName());
+			responseStr.append(faculty.get().getAge()).append(" years old and has ")
+					.append(faculty.get().getExperience()).append("+ years of experience in ")
+					.append(faculty.get().getProgrammingLanguage()).append(" technology at ")
+					.append(faculty.get().getOrganizationName());
 			return ResponseEntity.ok(Map.of("response", responseStr));
+		case FACULTYFILE:
+			try {
+				Path filePath = fileStorageService.loadFile(name + ".pdf");
+				Resource resource = new UrlResource(filePath.toUri());
+
+				if (resource.exists() || resource.isReadable()) {
+					return ResponseEntity.ok()
+							.header(HttpHeaders.CONTENT_DISPOSITION,
+									"attachment; filename=\"" + URLEncoder.encode(name, "UTF-8") + "\"")
+							.header(HttpHeaders.CONTENT_TYPE, "application/pdf") // Set the correct content type
+							.body(resource);
+				} else {
+					return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("response", "File not found"));
+				}
+			} catch (IOException e) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			}
 		case KEYWORD:
 			List<Faculty> keywordFaculties = facultyRepository.findByProgrammingLanguage(name);
 			if (keywordFaculties.isEmpty())
@@ -50,12 +79,16 @@ public class FacultyServiceImpl implements InfoGpt {
 						Map.of("response", "The data of faculty is not found with the requested keyword " + name));
 			if (keywordFaculties.size() == 1) {
 				responseStr = new StringBuffer();
-				responseStr.append("The requested details of the faculty teaching ").append(name).append(" technology: Name is ").append(keywordFaculties.getFirst().getName());
+				responseStr.append("The requested details of the faculty teaching ").append(name)
+						.append(" technology: Name is ").append(keywordFaculties.getFirst().getName());
 				if (keywordFaculties.getFirst().getGender().toUpperCase().equals(Gender.MALE.name()))
 					responseStr.append(", He is ");
 				else
 					responseStr.append(", she is ");
-				responseStr.append(keywordFaculties.getFirst().getAge()).append(" years old and has ").append(keywordFaculties.getFirst().getExperience()).append("+ years of experience in ").append(keywordFaculties.getFirst().getProgrammingLanguage()).append(" technology at ").append(keywordFaculties.getFirst().getOrganizationName());
+				responseStr.append(keywordFaculties.getFirst().getAge()).append(" years old and has ")
+						.append(keywordFaculties.getFirst().getExperience()).append("+ years of experience in ")
+						.append(keywordFaculties.getFirst().getProgrammingLanguage()).append(" technology at ")
+						.append(keywordFaculties.getFirst().getOrganizationName());
 				return ResponseEntity.ok(Map.of("response", responseStr));
 			}
 			return ResponseEntity.ok(Map.of("response", keywordFaculties));
@@ -70,12 +103,15 @@ public class FacultyServiceImpl implements InfoGpt {
 						"The data is not found for the requested faculties belongs to organization " + name));
 			if (orgFaculties.size() == 1) {
 				responseStr = new StringBuffer();
-				responseStr.append("The requested details of the faculty working at ").append(name).append(": Name is ").append(orgFaculties.getFirst().getName());
+				responseStr.append("The requested details of the faculty working at ").append(name).append(": Name is ")
+						.append(orgFaculties.getFirst().getName());
 				if (orgFaculties.getFirst().getGender().toUpperCase().equals(Gender.MALE.name()))
 					responseStr.append(", He is ");
 				else
 					responseStr.append(", she is ");
-				responseStr.append(orgFaculties.getFirst().getAge()).append(" years old and has ").append(orgFaculties.getFirst().getExperience()).append("+ years of experience in ").append(orgFaculties.getFirst().getProgrammingLanguage()).append(" technology");
+				responseStr.append(orgFaculties.getFirst().getAge()).append(" years old and has ")
+						.append(orgFaculties.getFirst().getExperience()).append("+ years of experience in ")
+						.append(orgFaculties.getFirst().getProgrammingLanguage()).append(" technology");
 				return ResponseEntity.ok(Map.of("response", responseStr));
 			}
 			return ResponseEntity.ok(Map.of("response", orgFaculties));

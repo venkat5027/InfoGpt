@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class InfoGptConstants {
 	public static final String FACULTY = "faculty";
+	public static final String FACULTY_FILES = "faculty file of";
 	public static final String FACULTY_OF_ORGANIZATION = "faculty details of organization";
 	public static final String FACULTY_BY_NAME = "faculty details of";
 	public static final Set<String> KEYWORDS = new HashSet<>(

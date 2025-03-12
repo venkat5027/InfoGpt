@@ -47,7 +47,13 @@ public class InfoGptService {
 			}
 		} else if (question.getQuestion().contains(InfoGptConstants.FACULTY)) {
 			infoGpt = infoGPTFactory.getInfoGptFactoryobject(InfoGptType.FACULTY);
-			if (question.getQuestion().contains(InfoGptConstants.FACULTY_OF_ORGANIZATION)) {
+			if(question.getQuestion().contains(InfoGptConstants.FACULTY_FILES)) {
+				name = question.getQuestion()
+						.substring(question.getQuestion().indexOf(InfoGptConstants.FACULTY_FILES)
+								+ InfoGptConstants.FACULTY_FILES.length() + 1);
+				type = FacultyAndHrQueryType.FACULTYFILE;
+			}
+			else if (question.getQuestion().contains(InfoGptConstants.FACULTY_OF_ORGANIZATION)) {
 				name = question.getQuestion()
 						.substring(question.getQuestion().indexOf(InfoGptConstants.FACULTY_OF_ORGANIZATION)
 								+ InfoGptConstants.FACULTY_OF_ORGANIZATION.length() + 1);
